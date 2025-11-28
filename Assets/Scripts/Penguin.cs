@@ -4,9 +4,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Penguin : MonoBehaviour
 {
+    public Slider hp_bar;
+    int hp_max = 1000;
+    int hp_cur = 500;
+    
+
     [Header("이동 설정")]
     public float moveSpeed = 5f;                //
     public float jumpForce = 7f;                //
@@ -47,6 +53,10 @@ public class Penguin : MonoBehaviour
         {
             spriteRenderer.flipX = moveInput < 0;
         }
+
+        hp_bar.value = (float)hp_cur / hp_max;
+
+        if(Input.anyKeyDown)
 
         // 애니메이션 파라미터 설정 ***
         animator.SetFloat("Speed", Mathf.Abs(moveInput)); // 이동 속도
