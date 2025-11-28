@@ -5,9 +5,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI;
+using TMPro;
 
 public class Penguin : MonoBehaviour
 {
+    int item_count = 0;
+    public TextMeshProUGUI item_txt;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "item")
+        {
+            Destroy(collision.gameObject);
+            item_count++;
+        }
+    }
+
     public Slider hp_bar;
     int hp_max = 1000;
     int hp_cur = 500;
@@ -54,7 +67,9 @@ public class Penguin : MonoBehaviour
             spriteRenderer.flipX = moveInput < 0;
         }
 
-        hp_bar.value = (float)hp_cur / hp_max;
+        //hp_bar.value = (float)hp_cur / hp_max;
+
+        item_txt.text = item_count.ToString();
 
         if(Input.anyKeyDown)
 
