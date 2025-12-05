@@ -5,13 +5,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI;
 using TMPro;
 
 public class Penguin : MonoBehaviour
 {
+    [Header("게임 결과 등록")]
+    public GameObject gameClear;
+    public GameObject gameOver;
+
     int item_count = 0;
     public TextMeshProUGUI item_txt;
+    //"체력바 설정, 게임 종료 설정, 이동설정"
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "item")
@@ -19,12 +23,26 @@ public class Penguin : MonoBehaviour
             Destroy(collision.gameObject);
             item_count++;
         }
+        if (collision.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            hp_cur = hp_cur - 500;
+            if (hp_cur <= 0)
+            {
+                //게임종료
+                gameOver.SetActive(true);
+            }
+        }
+        if (collision.tag == "Finish")
+        {
+            //게임종료
+            gameClear.SetActive(true);
+        }
     }
-
+    [Header("체력바 설정")]
     public Slider hp_bar;
     int hp_max = 1000;
-    int hp_cur = 500;
-    
+    int hp_cur = 1000;
 
     [Header("이동 설정")]
     public float moveSpeed = 5f;                //
@@ -50,8 +68,11 @@ public class Penguin : MonoBehaviour
         //spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    // 업데이트 -> |스프라이트 방향 전환| |애니메이션 파라미터 설정| |hp바 업데이트||
     void Update()
     {
+        
+
         // 좌우 입력
         moveInput = Input.GetAxisRaw("Horizontal");
 
@@ -67,7 +88,8 @@ public class Penguin : MonoBehaviour
             spriteRenderer.flipX = moveInput < 0;
         }
 
-        //hp_bar.value = (float)hp_cur / hp_max;
+        // hp바 업데이트
+        hp_bar.value = (float)hp_cur / hp_max;
 
         item_txt.text = item_count.ToString();
 
