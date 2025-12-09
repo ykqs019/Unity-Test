@@ -9,6 +9,7 @@ using TMPro;
 
 public class Penguin : MonoBehaviour
 {
+    public GameObject fx;
     [Header("게임 결과 등록")]
     public GameObject gameClear;
     public GameObject gameOver;
@@ -22,6 +23,8 @@ public class Penguin : MonoBehaviour
         {
             Destroy(collision.gameObject);
             item_count++;
+           GameObject G = Instantiate(fx, collision.transform.position, collision.transform.rotation);
+            Destroy(G, 1.0f);
         }
         if (collision.tag == "Enemy")
         {
@@ -31,6 +34,7 @@ public class Penguin : MonoBehaviour
             {
                 //게임종료
                 gameOver.SetActive(true);
+                Time.timeScale = 0.0f;
             }
         }
         if (collision.tag == "Finish")
@@ -63,15 +67,25 @@ public class Penguin : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
         rb = GetComponent<Rigidbody2D>();
         //animator = GetComponent<Animator>();
         //spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    bool pause = false; // 테스트
 
     // 업데이트 -> |스프라이트 방향 전환| |애니메이션 파라미터 설정| |hp바 업데이트||
     void Update()
     {
-        
+        /*if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pause = !pause;
+            if(pause) Time.timeScale = 0.0f;
+            else
+                Time.timeScale = 1.0f;
+        }*/
+
+            
 
         // 좌우 입력
         moveInput = Input.GetAxisRaw("Horizontal");
