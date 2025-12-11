@@ -42,7 +42,7 @@ public class Penguin : MonoBehaviour
             //게임종료
             gameClear.SetActive(true);
             GameObject G = Instantiate(fx, collision.transform.position, collision.transform.rotation);
-            Destroy(G, 1.0f);
+            Destroy(G, 3.0f);
         }
     }
     [Header("체력바 설정")]
