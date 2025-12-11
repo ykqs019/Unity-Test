@@ -29,7 +29,7 @@ public class Penguin : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             Destroy(collision.gameObject);
-            hp_cur = hp_cur - 500;
+            hp_cur = hp_cur - 250;
             if (hp_cur <= 0)
             {
                 //게임종료
@@ -41,6 +41,8 @@ public class Penguin : MonoBehaviour
         {
             //게임종료
             gameClear.SetActive(true);
+            GameObject G = Instantiate(fx, collision.transform.position, collision.transform.rotation);
+            Destroy(G, 1.0f);
         }
     }
     [Header("체력바 설정")]
